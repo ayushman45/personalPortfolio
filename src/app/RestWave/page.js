@@ -6,7 +6,8 @@ function RestWave() {
   const [method, setMethod] = useState('GET');
   const [url, setUrl] = useState('');
   const [headers, setHeaders] = useState([{ key: '', value: '' }]);
-  const [body, setBody] = useState('');
+  const [body, setBody] = useState(null);
+  const [output,setOutput] = useState(null);
 
   const handleMethodChange = (e) => {
     setMethod(e.target.value);
@@ -30,6 +31,10 @@ function RestWave() {
     setHeaders([...headers, { key: '', value: '' }]);
   };
 
+  const deleteHeader = (index) => {
+    setHeaders(headers.filter((_, i) => i !== index));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -42,13 +47,15 @@ function RestWave() {
 
     const requestOptions = {
       method,
-      headers: { ...formattedHeaders, 'Content-Type': 'application/json' },
-      body: method === 'POST' ? JSON.stringify(body) : null,
+      headers: { ...formattedHeaders },
+      body: ['GET', 'HEAD', 'TRACE', 'CONNECT'].includes(method) ? null : JSON.stringify(body),
     };
+
+    console.log(requestOptions);
 
     fetch(url, requestOptions)
       .then(response => response.json())
-      .then(data => console.log(data))
+      .then(data => setOutput(data))
       .catch(error => console.error('Error:', error));
   };
 
@@ -60,6 +67,12 @@ function RestWave() {
             <select value={method} onChange={handleMethodChange}>
               <option value="GET">GET</option>
               <option value="POST">POST</option>
+              <option value="PUT">PUT</option>
+              <option value="PATCH">PATCH</option>
+              <option value="DELETE">DELETE</option>
+              <option value="HEAD">HEAD</option>
+              <option value="TRACE">TRACE</option>
+              <option value="CONNECT">CONNECT</option>
             </select>
             <input
               type="text"
@@ -82,11 +95,13 @@ function RestWave() {
                 value={header.value}
                 onChange={(e) => handleHeaderChange(index, 'value', e.target.value)}
               />
+              <button type="button" onClick={() => deleteHeader(index)}>Delete Header</button>
             </div>
           ))}
           <button type="button" onClick={addHeader}>Add Header</button>
-          {method === 'POST' && (
+          {!['GET', 'HEAD', 'TRACE', 'CONNECT'].includes(method) && (
             <div>
+              <h4>data {`=>`}</h4>
               <textarea
                 value={body}
                 onChange={handleBodyChange}
@@ -97,6 +112,10 @@ function RestWave() {
         </div>
         <button type="submit">Send Request</button>
       </form>
+      <div>
+        <h3>Response {`=>`}</h3>
+        <pre>{JSON.stringify(output, null, 4)}</pre>
+      </div>
     </div>
   );
 }
