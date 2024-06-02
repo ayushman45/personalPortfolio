@@ -2,7 +2,10 @@
 
 import "./styles.css"
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+import SignInButton from "../Components/SignInButton";
+import { addRequest, getRequest } from "../api/app";
 
 function RestWave() {
     const [method, setMethod] = useState('GET');
@@ -10,6 +13,28 @@ function RestWave() {
     const [headers, setHeaders] = useState([{ key: '', value: '' }]);
     const [body, setBody] = useState('');
     const [output, setOutput] = useState(null);
+    const [user, setUser] = useState(null);
+    const [requests, setRequests] = useState([]);
+
+    useEffect(()=>{
+        const user=window.localStorage.getItem('firebase-restwave-token');
+        if(user){
+            setUser(JSON.parse(user));
+        }
+
+    },[])
+
+    useEffect(()=>{
+        if(user){
+            getRequest(JSON.stringify({email:user.email}))
+            .then(res=>{
+                console.log(res)
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+        }
+    },[user])
 
     const handleMethodChange = (e) => {
         setMethod(e.target.value);
@@ -69,6 +94,31 @@ function RestWave() {
         }
     };
 
+    const handleSave = () => {
+        if(!user){
+            alert("Login before saving your request");
+        }
+
+        if(!url ){
+            alert("At least endpoint URL is required to save")
+            return;
+        }
+
+        let title= prompt("Enter a title for your request");
+
+        addRequest(JSON.stringify({url,method,headers,body,email:user.email,title}))
+        .then(res=>{
+            setRequests([...requests,{url,method,headers,body,email:user.email,title}])
+            alert("Request saved successfully")
+        })
+        
+        .catch(err=>{
+            console.log(err)
+            alert("Unable to save request")
+        })
+
+    }
+
     const parseCurlCommand = (curlCommand) => {
         const curlParts = curlCommand.match(/(?:[^\s"'\n]+|'[^']*'|"[^"]*")+/g);
         const newHeaders = [];
@@ -76,8 +126,6 @@ function RestWave() {
         let newUrl = '';
         let newBody = '';
         let bodyStart = false;
-
-        console.log(curlParts)
 
         curlParts.forEach((part, index) => {
             if (part === '-X' || part === '--request') {
@@ -94,7 +142,6 @@ function RestWave() {
             
             else if (part === '-H' || part === '--header') {
                 const header = curlParts[index + 1].split(':');
-                console.log(header)
                 newHeaders.push({ key: header[0].slice(1).trim(), value: header[1].slice(0,header[1].length-1).trim() });
             } 
             
@@ -118,6 +165,7 @@ function RestWave() {
         <div className="container">
             <div className="header">
                 <h1>RestWave</h1>
+                {user?<h3>Hi {user.displayName}</h3> :<SignInButton />}
             </div>
             <form onSubmit={handleSubmit} className="formContainer">
                 <div className="form">
@@ -181,12 +229,47 @@ function RestWave() {
                         </div>
                     )}
                 </div>
+
                 <div className="form-row">
                     <div>
                         <h3>Response</h3>
                         <pre>{output&&JSON.stringify(output, null, 4)}</pre>
                     </div>
                 </div>
+
+                <div className="form-row">
+                    <button onClick={handleSave}>Save</button>
+                </div>
+
+                <div className="form-row">
+                    <h3>Saved request</h3>
+                </div>
+
+                <div className="form-row">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>URL</th>
+                                <th>Method</th>
+                                <th>Headers</th>
+                                <th>Body</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {requests.map((request,index)=>(
+                                <tr key={index}>
+                                    <td>{request.title}</td>
+                                    <td>{request.url}</td>
+                                    <td>{request.method}</td>
+                                    <td>{request.headers}</td>
+                                    <td>{request.body}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+                
             </form>
             
         </div>

@@ -90,7 +90,7 @@ const projects = [
   {
     projectName: "RestWave",
     description: "Test Your RESTful API's",
-    link: "https://ayushman45.vercel.app/RestWave",
+    link: "/RestWave",
     status: "Live",
     reportAnIssue:"https://forms.gle/v9GHYpPXCzemib8eA"
   },
