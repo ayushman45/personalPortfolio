@@ -7,6 +7,8 @@ import React, { useEffect, useState } from 'react';
 import SignInButton from "../Components/SignInButton";
 import { addRequest, getRequest } from "../api/app";
 
+const curlToCodeOptions =["fetch","jQuery","XHR","axios"]
+
 function RestWave() {
     const [method, setMethod] = useState('GET');
     const [url, setUrl] = useState('');
@@ -15,6 +17,9 @@ function RestWave() {
     const [output, setOutput] = useState(null);
     const [user, setUser] = useState(null);
     const [requests, setRequests] = useState([]);
+    const [ctcOp,setCtcOp] = useState('fetch');
+
+    const [code,setCode] = useState('')
 
     useEffect(()=>{
         if(typeof window !== 'undefined'){
@@ -25,6 +30,166 @@ function RestWave() {
         }
 
     },[])
+
+    const convertToFetch = () => {
+        let headersString = '';
+
+        headers.forEach((header) => {
+            if (header.key && header.value) {
+                headersString += `'${header.key}': '${header.value}',\n`;
+            }
+        });
+
+        let fetchCode = `fetch('${url}', {\n`;
+        fetchCode += `  method: '${method}',\n`;
+        fetchCode += `  headers: {\n`;
+        fetchCode += headersString;
+        fetchCode += `  },\n`;
+
+        if (!['GET', 'HEAD', 'TRACE', 'CONNECT'].includes(method)) {
+            fetchCode += `  body: '${body}',\n`;
+        }
+
+        fetchCode += `})\n`;
+        fetchCode += `  .then(response => response.json())\n`;
+        fetchCode += `  .then(data => console.log(data))\n`;
+        fetchCode += `  .catch(error => console.error('Error:', error));`;
+
+        return fetchCode;
+
+    }
+
+    const convertToJQuery = () => {
+        let headersString = '';
+
+        headers.forEach((header) => {
+            if (header.key && header.value) {
+                headersString += `'${header.key}': '${header.value}',\n`;
+            }
+        });
+
+        let jQueryCode = `$.ajax({\n`;
+        jQueryCode += `  method: '${method}',\n`;
+        jQueryCode += `  url: '${url}',\n`;
+        jQueryCode += `  headers: {\n`;
+        jQueryCode += headersString;
+        jQueryCode += `  },\n`;
+
+        if (!['GET', 'HEAD', 'TRACE', 'CONNECT'].includes(method)) {
+            jQueryCode += `  data: '${body}',\n`;
+        }
+
+        jQueryCode += `})\n`;
+        jQueryCode += `  .done(function(data) {\n`;
+        jQueryCode += `    console.log(data);\n`;
+        jQueryCode += `  })\n`;
+        jQueryCode += `  .fail(function(jqXHR, textStatus) {\n`;
+        jQueryCode += `    console.log( "Request failed: " + textStatus );\n`;
+        jQueryCode += `  });`;
+
+        return jQueryCode;
+
+    }
+
+    const convertToXHR = () => {
+        let headersString = '';
+        let bodyString = '';
+        let xhrString = '';
+
+        headers.forEach((header) => {
+            if (header.key && header.value) {
+                headersString += `'${header.key}': '${header.value}',\n`;
+            }
+        });
+
+        if (!['GET', 'HEAD', 'TRACE', 'CONNECT'].includes(method)) {
+            bodyString = `data: '${body}',\n`;
+        }
+
+        xhrString += `var xhr = new XMLHttpRequest();\n`;
+        xhrString += `xhr.open('${method}', '${url}');\n`;
+        xhrString += `xhr.setRequestHeader('Content-Type', 'application/json');\n`;
+        xhrString += `xhr.setRequestHeader('Accept', 'application/json');\n`;
+        xhrString += `xhr.setRequestHeader('Access-Control-Allow-Origin', '*');\n`;
+        xhrString += `xhr.setRequestHeader('Access-Control-Allow-Credentials', 'true');\n`;
+        xhrString += `xhr.setRequestHeader('Access-Control-Allow-Headers', 'Content-Type');\n`;
+        xhrString += `xhr.setRequestHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');\n`;
+
+        xhrString += `xhr.onreadystatechange = function() {\n`;
+        xhrString += `  if (this.readyState === 4) {\n`;
+        xhrString += `    console.log(this.responseText);\n`;
+        xhrString += `  }\n`;
+        xhrString += `};\n`;
+        xhrString += `xhr.send(${bodyString});`;
+
+        return xhrString;
+
+    }
+
+    const convertToAxios = () => {
+        let headersString = '';
+        let bodyString = '';
+        let axiosString = '';
+
+        headers.forEach((header) => {
+            if (header.key && header.value) {
+                headersString += `'${header.key}': '${header.value}',\n`;
+            }
+        });
+
+        if (!['GET', 'HEAD', 'TRACE', 'CONNECT'].includes(method)) {
+            bodyString = `data: '${body}',\n`;
+        }
+
+        axiosString += `axios({\n`;
+        axiosString += `  method: '${method}',\n`;
+        axiosString += `  url: '${url}',\n`;
+        axiosString += `  headers: {\n`;
+        axiosString += headersString;
+        axiosString += `  },\n`;
+
+        if (!['GET', 'HEAD', 'TRACE', 'CONNECT'].includes(method)) {
+            axiosString += `  data: '${body}',\n`;
+        }
+        axiosString += `})\n`;
+        axiosString += `  .then(function (response) {\n`;
+        axiosString += `    console.log(response);\n`;
+        axiosString += `  })\n`;
+
+        axiosString += `  .catch(function (error) {\n`;
+        axiosString += `    console.log(error);\n`;
+        axiosString += `  });`;
+
+        return axiosString;
+
+    }
+
+    useEffect(()=>{
+        if(url && method && headers && body && ctcOp && user && user.email){
+            if(ctcOp==='fetch'){
+                setCode(convertToFetch());
+            }
+            else if(ctcOp==='jQuery'){
+                setCode(convertToJQuery());
+            }
+            else if(ctcOp==='XHR'){
+                setCode(convertToXHR());
+            }
+            else if(ctcOp==='axios'){
+                setCode(convertToAxios());
+            }
+            else{
+                setCode('')
+            }
+
+        }
+
+        else{
+            setCode('')
+        }
+        
+
+    },[ctcOp,headers,method,body,url])
 
     const getReq = async(email)=>{
         const res=await getRequest(JSON.stringify({email}))
@@ -172,6 +337,18 @@ function RestWave() {
         setBody(request.body);
     }
 
+    const handleCodeCopy = () => {
+        navigator.clipboard.writeText(code);
+        document.querySelector('.toolTip-box').style.backgroundColor="green";
+        document.querySelector('.toolTip-box').innerText="Copied";
+        document.querySelector('.toolTip-box').style.visibility="visible";
+        setTimeout(()=>{
+            document.querySelector('.toolTip-box').style.backgroundColor="white";
+            document.querySelector('.toolTip-box').innerText="Copy";
+            document.querySelector('.toolTip-box').style.visibility="hidden";
+        },3000)
+    }
+
     return (
         <div className="container">
             <div className="header">
@@ -251,6 +428,42 @@ function RestWave() {
                 <div className="form-row">
                     <button onClick={handleSave}>Save</button>
                 </div>
+
+                <br />
+
+                <div className="form-row">
+                    <table>
+                        <thead>
+                            <tr>
+                                {
+                                    curlToCodeOptions.map((op,index) => {
+                                        if(op===ctcOp){
+                                            return <th key={index}>{op}</th>
+                                        }
+                                        else{
+                                            return <th className="not-selected" style={{cursor:"pointer"}} key={index} onClick={()=>setCtcOp(op)}>{op}</th>
+                                        }
+                                    })
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td className="codeWindow" colSpan={curlToCodeOptions.length}>
+                                    <pre id="xCode">{code}</pre>
+                                    <div className="copyButton" onClick={handleCodeCopy}>
+                                        <img src="./copy.svg" alt="copyBtn" height={"100%"}/>
+                                        <div className="toolTip-box">
+                                            Copy
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <br />
 
                 <div className="form-row">
                     <h3>Saved request</h3>

@@ -189,6 +189,11 @@ table {
     background-color: blueviolet;
     color: white;
   }
+
+  .not-selected{
+    background-color: rgb(219, 183, 252);
+    color: black;
+  }
   
   /* Table row styles */
   tr:nth-child(even) {
@@ -209,4 +214,44 @@ table {
         height: 100%;
         margin: 0;
     }
+  }
+
+  .codeWindow{
+    height: 300px;
+    padding: 14px;
+    position: relative;
+  }
+
+  .copyButton{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 7px;
+
+    &:hover .toolTip-box{
+        visibility: visible;
+    }
+  }
+
+  .toolTip-box{
+    visibility: collapse;
+    width: 40px;
+    font-size: 12px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: blueviolet;
+    color: white;
+    padding: 4px;
+    font-weight: 700;
+    border-radius: 5px;
   }
