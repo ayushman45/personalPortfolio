@@ -48,4 +48,6 @@
     font-size: large;
     font-weight: 500;
     border-radius: 7px;
+    cursor: pointer;
+    text-decoration: none;
 }
