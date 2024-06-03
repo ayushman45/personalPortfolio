@@ -1,6 +1,6 @@
 "use client"
 import React from 'react';
-import { auth, provider } from './firebaseConfig';
+import { auth, provider } from '../firebaseConfig';
 import { signInWithPopup } from 'firebase/auth';
 
 const SignInButton = () => {
@@ -8,7 +8,7 @@ const SignInButton = () => {
         try {
             const result = await signInWithPopup(auth, provider);
             if(result.user.auth.currentUser){
-                window && window.localStorage.setItem('firebase-restwave-token', JSON.stringify(result.user.auth.currentUser));
+                window.localStorage.setItem('firebase-restwave-token', JSON.stringify(result.user.auth.currentUser));
             }
             
             window.location.reload();

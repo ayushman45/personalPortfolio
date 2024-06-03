@@ -24,16 +24,18 @@ function RestWave() {
 
     },[])
 
-    useEffect(()=>{
-        if(user){
-            getRequest(JSON.stringify({email:user.email}))
-            .then(res=>{
-                console.log(res)
-            })
-            .catch(err=>{
-                console.log(err)
-            })
+    const getReq = async(email)=>{
+        const res=await getRequest(JSON.stringify({email}))
+        if(JSON.parse(res).success){
+            setRequests(JSON.parse(res).res);
         }
+    }
+
+    useEffect(()=>{
+        if(user && user.email){
+            getReq(user.email);
+        }
+
     },[user])
 
     const handleMethodChange = (e) => {
@@ -161,6 +163,13 @@ function RestWave() {
         setBody(newBody.trim());
     };
 
+    const handleLoad = (e,request) => {
+        setMethod(request.method);
+        setUrl(request.url);
+        setHeaders(JSON.parse(request.headers));
+        setBody(request.body);
+    }
+
     return (
         <div className="container">
             <div className="header">
@@ -244,31 +253,29 @@ function RestWave() {
                 <div className="form-row">
                     <h3>Saved request</h3>
                 </div>
-
-                <div className="form-row">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>URL</th>
-                                <th>Method</th>
-                                <th>Headers</th>
-                                <th>Body</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {requests.map((request,index)=>(
-                                <tr key={index}>
-                                    <td>{request.title}</td>
-                                    <td>{request.url}</td>
-                                    <td>{request.method}</td>
-                                    <td>{request.headers}</td>
-                                    <td>{request.body}</td>
+                {requests.length>0 && 
+                    <div className="form-row">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>URL ENDPOINT</th>
+                                    <th></th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody>
+                                {requests.map((request,index)=>(
+                                    <tr key={index}>
+                                        <td>{request.title}</td>
+                                        <td>{request.url}</td>
+                                        
+                                        <td><button onClick={(e)=>handleLoad(e,request)}>Load</button></td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                }
                 
             </form>
             

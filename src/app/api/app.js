@@ -1,9 +1,8 @@
 "use server"
 
-const mongoose = require('mongoose');
 const Request = require('./mongoose'); // Adjust the path as necessary
 
-export const addRequest = (req) => {
+export const addRequest = async(req) => {
     try{
         let {email,url,method,headers,body,title}=JSON.parse(req);
 
@@ -31,25 +30,30 @@ export const addRequest = (req) => {
     }
 }
 
-export const getRequest = (req) => {
-    
-
+export const getRequest = async(req) => {
+    let temp;
     try{
         let {email}=JSON.parse(req);
+        console.log(email)
+        let res= await Request.find({email})
+        if(res){
+            console.log(JSON.stringify({res,success:true}))
+            temp=res;
+            return JSON.stringify({res,success:true});
+        }
 
-        Request.find({email})
-        .then(data=>{
-            console.log(data,JSON.stringify({data,success:true}))
-            return "abcd";
-        })
-        .catch(err=>{
-            console.log("in err")
-            return ({err,success:false});
-        })
+        else{
+            console.log("else")
+            return JSON.stringify({err,success:false});
+            
+        }
+
     }
+
     catch(err){
-        console.log("in err")
-        return ({err,success:false});
+        console.log("catch")
+        return JSON.stringify({err,success:false});
     }
+
 }
 
