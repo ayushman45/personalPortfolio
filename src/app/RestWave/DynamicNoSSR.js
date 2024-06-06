@@ -126,6 +126,17 @@ function RestWave() {
 
     }
 
+    const getBodyForAxios = () => {
+        let bodyString = '';
+        let arr=body.split('\n');
+        
+        for(let line of arr.slice(1, arr.length-1)) {
+            bodyString += "\t"+line+"\n";
+        }
+
+        return bodyString;
+    }
+
     const convertToAxios = () => {
         let headersString = '';
         let bodyString = '';
@@ -133,32 +144,28 @@ function RestWave() {
 
         headers.forEach((header) => {
             if (header.key && header.value) {
-                headersString += `'${header.key}': '${header.value}',\n`;
+                headersString += `'${header.key}': '${header.value}',\n\t\t`;
             }
         });
 
+        axiosString += `axios.${method.toLowerCase()}(\n`;
+        axiosString += `\t'${url}',\n`;
+        axiosString += `\theaders: {\n`;
+        axiosString += `\t\t`+headersString;
+        
         if (!['GET', 'HEAD', 'TRACE', 'CONNECT'].includes(method)) {
-            bodyString = `data: '${body}',\n`;
+            axiosString += `},\n`;
+            axiosString += `\tdata:{\n`;
+            axiosString += `${getBodyForAxios()}`
         }
-
-        axiosString += `axios({\n`;
-        axiosString += `  method: '${method}',\n`;
-        axiosString += `  url: '${url}',\n`;
-        axiosString += `  headers: {\n`;
-        axiosString += headersString;
-        axiosString += `  },\n`;
-
-        if (!['GET', 'HEAD', 'TRACE', 'CONNECT'].includes(method)) {
-            axiosString += `  data: '${body}',\n`;
-        }
+        axiosString += `\t});\n`;
+        axiosString += `.then(function (response) {\n`;
+        axiosString += `\tconsole.log(response);\n`;
         axiosString += `})\n`;
-        axiosString += `  .then(function (response) {\n`;
-        axiosString += `    console.log(response);\n`;
-        axiosString += `  })\n`;
 
-        axiosString += `  .catch(function (error) {\n`;
-        axiosString += `    console.log(error);\n`;
-        axiosString += `  });`;
+        axiosString += `.catch(function (error) {\n`;
+        axiosString += `\tconsole.log(error);\n`;
+        axiosString += `});`;
 
         return axiosString;
 
