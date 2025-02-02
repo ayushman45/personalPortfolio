@@ -1,10 +1,10 @@
 import AvatarComponent from "@/assets/AvatarComponent";
+import Frontend from "@/assets/Frontend";
 import Gif from "@/assets/Gif";
 import Introduction from "@/assets/Introduction";
 import Name from "@/assets/Name";
 import Navigations from "@/assets/Navigations";
 import Professional from "@/assets/Professional";
-import Skills from "@/assets/Skills";
 
 export default function Home() {
 
@@ -22,7 +22,7 @@ export default function Home() {
       </div>
       <Introduction />
       <Professional />
-      <Skills />
+      <Frontend />
     </div>
   );
 }

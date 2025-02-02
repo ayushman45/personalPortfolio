@@ -7,18 +7,21 @@ function Introduction() {
         Ayushman Manishankar - Software Engineer
       </h1>
       <p className="max-w-full">
-        Incididunt consequat adipisicing velit eu labore sit. In quis mollit
-        exercitation ullamco. Labore voluptate deserunt deserunt sint aliqua.
-        Velit ipsum elit irure tempor consectetur in aute qui commodo. Quis ex
-        dolor aliquip esse velit. Excepteur cillum sit labore id sunt nisi sit
-        pariatur enim sit elit non. Lorem minim consectetur aliqua et id
-        deserunt consectetur irure. Laborum consectetur fugiat laborum id sit
-        Lorem et dolore laboris occaecat amet do dolor nisi. Aute laborum
-        consectetur ut eiusmod quis eu aute deserunt qui ut sunt exercitation
-        amet. Qui ut velit et velit. Dolore fugiat labore labore qui in
-        voluptate exercitation id. Non et aliquip proident eiusmod ex veniam in.
-        Proident exercitation Lorem amet minim laboris aute eu veniam culpa
-        Lorem.
+        Hi there! I'm Ayushman Manishankar, a passionate Computer Science
+        Engineer, and Fullstack Developer. My journey is fueled by a genuine
+        curiosity for technology, and I'm always eager to learn and adapt to the
+        latest advancements. When I'm not immersed in crafting seamless web
+        experiences, you'll find me in two very different arenas: the strategic
+        world of chess and the energetic realm of cricket. Chess is my mental
+        workout, where I hone my problem-solving skills, while cricket unleashes
+        my competitive spirit and teaches me the power of teamwork. But that's
+        not all – I'm also an enthusiastic music creator. Strumming my guitar
+        and producing melodies is my creative escape, adding an extra rhythm to
+        my life. I'm a firm believer in the value of connections, so let's
+        connect! Whether it's discussing the latest tech trends, exploring
+        exciting opportunities, or sharing experiences in any of my passions,
+        I'm here to engage and make an impact together in this vibrant tech
+        world.
       </p>
     </div>
   );

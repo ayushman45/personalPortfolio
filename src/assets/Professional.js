@@ -52,8 +52,8 @@ const carouselItems = [
 ]
 export default function Professional() {
   return (
-    <div className="min-w-[100vw] p-4 flex flex-col justify-center z-10">
-        <h2 className="text-3xl my-4">Professional</h2>
+    <div className="min-w-[100vw] py-2 px-4 flex flex-col z-10">
+        <h2 className="text-3xl my-3">Professional</h2>
     <Carousel
       opts={{
         align: "center",
