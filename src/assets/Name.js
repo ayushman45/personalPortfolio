@@ -1,11 +1,9 @@
-import Image from 'next/image'
 import React from 'react'
-import profileName from '../../public/netflix.png'
 
 function Name() {
   return (
     <div className="netflix">
-        <Image src={profileName} alt='self-logo' width={200} height={50} title='Ayushman' />
+        <img src={'/netflix.png'} alt='self-logo' className='w-32' title='Ayushman' />
     </div>
   )
 }

@@ -11,49 +11,42 @@ import {
 const carouselItems = [
   {
     id: 1,
-    tech: "Next Js",
-    yearsOfExperience: "1 year",
+    tech: "Express Js",
+    yearsOfExperience: "2 years",
     description:
-      "Next.js is a React framework that helps developers build web applications. It provides tools and features for building the front-end and back-end of web applications",
-    image: "/frontend/nextjs.gif",
+      "Express.js is a lightweight Node.js framework for building web applications and APIs. It simplifies server-side development with easy routing, middleware support, and efficient handling of HTTP requests.",
+    image: "/backend/express.png",
   },
   {
     id: 2,
-    tech: "React",
+    tech: "Node.js",
     yearsOfExperience: "2 years",
     description:
-      "React is a JavaScript library for building user interfaces. It allows developers to create reusable UI components and manage the state of applications efficiently.",
-    image: "/frontend/reactjs.gif",
+      "Node.js is a runtime environment that allows developers to run JavaScript on the server side. It is built on Chrome's V8 JavaScript engine and is widely used for building scalable and high-performance backend applications.",
+    image: "/backend/nodejs.png",
   },
   {
     id: 3,
-    tech: "JavaScript",
+    tech: "Java",
     yearsOfExperience: "3 years",
     description:
-      "JavaScript is a programming language that enables interactive web pages. It is a core technology of the web, alongside HTML and CSS, and is used to create dynamic content on websites.",
-    image: "/frontend/js.gif",
+      "Java is a versatile, object-oriented programming language commonly used for building enterprise-level applications, Android apps, and large-scale systems. It is known for its platform independence and robustness.",
+    image: "/backend/java.gif",
   },
   {
     id: 4,
-    tech: "Material-UI (MUI)",
-    yearsOfExperience: "1 year",
+    tech: "Python",
+    yearsOfExperience: "2 years",
     description:
-      "Material-UI (MUI) is a popular React UI framework that implements Google's Material Design. It provides a collection of pre-built components to help developers create visually appealing and responsive web applications.",
-    image: "/frontend/mui.png",
+      "Python is a high-level, interpreted programming language known for its simplicity and readability. It is widely used for web development, data analysis, artificial intelligence, scientific computing, and automation.",
+    image: "/backend/python.gif",
   },
-  {
-    id: 5,
-    tech: "shadcn",
-    yearsOfExperience: "6 months",
-    description:
-      "shadcn is a modern UI library for building sleek and customizable user interfaces. It offers a set of components and utilities designed to streamline the development of responsive and accessible web applications.",
-    image: "/frontend/shadcn.png",
-  }
 ];
-export default function Frontend() {
+
+export default function Backend() {
   return (
     <div className="max-w-[100vw] py-2 px-4 flex flex-col z-10 overflow-x-scroll">
-      <h2 className="text-3xl my-3">Frontend Skills</h2>
+      <h2 className="text-3xl my-3">Backend Skills</h2>
       <Carousel
         opts={{
           align: "center",
@@ -62,7 +55,10 @@ export default function Frontend() {
       >
         <CarouselContent>
           {carouselItems.map((item) => (
-            <CarouselItem key={item.id} className="basis-1/5 md:1/4 xl:basis-1/4">
+            <CarouselItem
+              key={item.id}
+              className="basis-1/5 md:1/4 xl:basis-1/4"
+            >
               <div className="p-0">
                 <Card className="overflow-hidden transition-all duration-300 ease-in-out hover:scale-105">
                   <CardContent className="p-0 relative group">
@@ -79,7 +75,9 @@ export default function Frontend() {
                           {item.tech}
                         </p>
                         <div className="space-y-2 hidden group-hover:block transition-all duration-300 ease-in-out">
-                          <p className="text-sm font-medium">Years of Experience : {item.yearsOfExperience}</p>
+                          <p className="text-sm font-medium">
+                            Years of Experience : {item.yearsOfExperience}
+                          </p>
                           {/* <p className="text-xs">{item.description}</p> */}
                         </div>
                       </div>
@@ -91,7 +89,7 @@ export default function Frontend() {
           ))}
         </CarouselContent>
         <CarouselPrevious className="left-2 2xl:hidden" />
-      <CarouselNext className="right-2 2xl:hidden" />
+        <CarouselNext className="right-2 2xl:hidden" />
       </Carousel>
     </div>
   );

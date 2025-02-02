@@ -11,49 +11,33 @@ import {
 const carouselItems = [
   {
     id: 1,
-    tech: "Next Js",
-    yearsOfExperience: "1 year",
+    tech: "Mongo DB",
+    yearsOfExperience: "2 years",
     description:
-      "Next.js is a React framework that helps developers build web applications. It provides tools and features for building the front-end and back-end of web applications",
-    image: "/frontend/nextjs.gif",
+      "",
+      image: "/databases/mongo.png"
   },
   {
     id: 2,
-    tech: "React",
-    yearsOfExperience: "2 years",
+    tech: "Redis",
+    yearsOfExperience: "6 months",
     description:
-      "React is a JavaScript library for building user interfaces. It allows developers to create reusable UI components and manage the state of applications efficiently.",
-    image: "/frontend/reactjs.gif",
+      "",
+      image: "/databases/redis.png"
   },
   {
     id: 3,
-    tech: "JavaScript",
-    yearsOfExperience: "3 years",
-    description:
-      "JavaScript is a programming language that enables interactive web pages. It is a core technology of the web, alongside HTML and CSS, and is used to create dynamic content on websites.",
-    image: "/frontend/js.gif",
-  },
-  {
-    id: 4,
-    tech: "Material-UI (MUI)",
-    yearsOfExperience: "1 year",
-    description:
-      "Material-UI (MUI) is a popular React UI framework that implements Google's Material Design. It provides a collection of pre-built components to help developers create visually appealing and responsive web applications.",
-    image: "/frontend/mui.png",
-  },
-  {
-    id: 5,
-    tech: "shadcn",
+    tech: "Dynamo DB",
     yearsOfExperience: "6 months",
     description:
-      "shadcn is a modern UI library for building sleek and customizable user interfaces. It offers a set of components and utilities designed to streamline the development of responsive and accessible web applications.",
-    image: "/frontend/shadcn.png",
+      "",
+    image: "/databases/dynamo.png",
   }
 ];
-export default function Frontend() {
+export default function Database() {
   return (
     <div className="max-w-[100vw] py-2 px-4 flex flex-col z-10 overflow-x-scroll">
-      <h2 className="text-3xl my-3">Frontend Skills</h2>
+      <h2 className="text-3xl my-3">Databases</h2>
       <Carousel
         opts={{
           align: "center",

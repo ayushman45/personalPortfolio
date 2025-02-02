@@ -38,19 +38,17 @@ function Page() {
           <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
             Who's Watching ?
           </h1>
-          <div className="flex flex-row justify-around gap-8 items-center">
+          <div className="grid grid-flow-row grid-cols-2 md:grid-cols-4 justify-around gap-8 items-center">
             {profiles.map((prof, index) => {
               return (
                 <div
                   key={index}
                   className="flex flex-col justify-center items-center gap-4"
                 >
-                  <Image
+                  <img
                     src={prof.url}
                     alt="prof.title"
-                    width={150}
-                    height={150}
-                    className="hover:border-white hover:border-4 rounded-[7px]"
+                    className="hover:border-white hover:border-4 rounded-[7px] w-24"
                     onClick={() => {
                       setProfile(prof.title.toLowerCase());
                       setLoading(true);

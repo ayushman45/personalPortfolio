@@ -7,8 +7,8 @@ import React, { useContext } from 'react'
 function Gif() {
     const {profile} = useContext(Context);
   return (
-    <div className='w-full absolute top-0 left-0 z-0'>
-        <img src={"/gifs/"+profile+".gif"} alt={profile} className='w-full image-banner' />
+    <div className='h-[70vh] absolute top-0 left-0 z-0 flex flex-row justify-center items-center'>
+        <img src={"/gifs/"+profile+".gif"} alt={profile} className='min-h-full min-w-[100vw] image-banner' />
     </div>
   )
 }

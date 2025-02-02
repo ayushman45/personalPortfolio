@@ -53,7 +53,7 @@ const carouselItems = [
 export default function Professional() {
   return (
     <div className="min-w-[100vw] py-2 px-4 flex flex-col z-10">
-        <h2 className="text-3xl my-3">Professional</h2>
+        <h2 className="text-3xl my-3">Experience</h2>
     <Carousel
       opts={{
         align: "center",
@@ -64,7 +64,7 @@ export default function Professional() {
         {carouselItems.map((item) => (
           <CarouselItem
             key={item.id}
-            className="basis-1/3 xl:basis-1/5"
+            className="basis-1/6 md:basis-1/5 xl:basis-1/4"
           >
             <div className="p-0">
               <Card className="overflow-hidden transition-all duration-300 ease-in-out hover:scale-105">
@@ -93,8 +93,8 @@ export default function Professional() {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="left-2 md:hidden" />
-      <CarouselNext className="right-2 md:hidden" />
+      <CarouselPrevious className="left-2 2xl:hidden" />
+      <CarouselNext className="right-2 2xl:hidden" />
     </Carousel>
     </div>
   );

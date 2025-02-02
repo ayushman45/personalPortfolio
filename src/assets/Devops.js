@@ -11,49 +11,41 @@ import {
 const carouselItems = [
   {
     id: 1,
-    tech: "Next Js",
-    yearsOfExperience: "1 year",
+    tech: "AWS",
+    yearsOfExperience: "2 years",
     description:
-      "Next.js is a React framework that helps developers build web applications. It provides tools and features for building the front-end and back-end of web applications",
-    image: "/frontend/nextjs.gif",
+      "",
+      image: '/devops/aws.png'
   },
   {
     id: 2,
-    tech: "React",
-    yearsOfExperience: "2 years",
+    tech: "Vercel",
+    yearsOfExperience: "1 year",
     description:
-      "React is a JavaScript library for building user interfaces. It allows developers to create reusable UI components and manage the state of applications efficiently.",
-    image: "/frontend/reactjs.gif",
+      "",
+      image: '/devops/vercel.png'
   },
   {
     id: 3,
-    tech: "JavaScript",
+    tech: "Git & Github",
     yearsOfExperience: "3 years",
     description:
-      "JavaScript is a programming language that enables interactive web pages. It is a core technology of the web, alongside HTML and CSS, and is used to create dynamic content on websites.",
-    image: "/frontend/js.gif",
+      "",
+      image: '/devops/git.png'
   },
   {
     id: 4,
-    tech: "Material-UI (MUI)",
-    yearsOfExperience: "1 year",
+    tech: "Heroku",
+    yearsOfExperience: "1 years",
     description:
-      "Material-UI (MUI) is a popular React UI framework that implements Google's Material Design. It provides a collection of pre-built components to help developers create visually appealing and responsive web applications.",
-    image: "/frontend/mui.png",
+      "",
+      image: '/devops/heroku.png'
   },
-  {
-    id: 5,
-    tech: "shadcn",
-    yearsOfExperience: "6 months",
-    description:
-      "shadcn is a modern UI library for building sleek and customizable user interfaces. It offers a set of components and utilities designed to streamline the development of responsive and accessible web applications.",
-    image: "/frontend/shadcn.png",
-  }
 ];
-export default function Frontend() {
+export default function Devops() {
   return (
     <div className="max-w-[100vw] py-2 px-4 flex flex-col z-10 overflow-x-scroll">
-      <h2 className="text-3xl my-3">Frontend Skills</h2>
+      <h2 className="text-3xl my-3">DevOps and Tools</h2>
       <Carousel
         opts={{
           align: "center",

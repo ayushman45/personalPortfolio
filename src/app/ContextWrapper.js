@@ -6,7 +6,7 @@ import { createContext } from "react";
 export const Context = createContext();
 
 function ContextWrapper({children}) {
-    const [profile,setProfile] = useState('wanderer')
+    const [profile,setProfile] = useState('developer')
   return (
     <Context value={{profile,setProfile}}>
         {children}
